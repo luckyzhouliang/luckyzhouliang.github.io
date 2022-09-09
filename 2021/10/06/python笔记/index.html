@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -26,12 +26,12 @@
 <meta property="og:url" content="https://luckyzhouliang.github.io/2021/10/06/python%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="南风知我意">
 <meta property="og:description" content="提取变量值任何的序列（或者是可迭代对象）可以通过一个简单的赋值操作来分解为单独的变量。 唯一的要求就是变量的总数和结构必须与序列相吻合。">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/zhouliang18/pic/raw/master/20211006212842.png">
 <meta property="og:image" content="https://gitee.com/zhouliang18/pic/raw/master/20211006225021.png">
 <meta property="og:image" content="https://gitee.com/zhouliang18/pic/raw/master/20211006225055.png">
 <meta property="article:published_time" content="2021-10-06T13:24:13.000Z">
-<meta property="article:modified_time" content="2021-12-08T03:23:19.370Z">
+<meta property="article:modified_time" content="2022-09-04T08:01:21.484Z">
 <meta property="article:author" content="zhouliang">
 <meta property="article:tag" content="Python, 数据分析, Linux, Matlab, Flight dynamics, Aircraft">
 <meta name="twitter:card" content="summary">
@@ -46,7 +46,7 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en'
   };
 </script>
 
@@ -91,7 +91,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -121,12 +121,27 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
 
   </li>
   </ul>
@@ -156,7 +171,7 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://luckyzhouliang.github.io/2021/10/06/python%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,16 +193,16 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2021-10-06 21:24:13" itemprop="dateCreated datePublished" datetime="2021-10-06T21:24:13+08:00">2021-10-06</time>
+              <time title="Created: 2021-10-06 21:24:13" itemprop="dateCreated datePublished" datetime="2021-10-06T21:24:13+08:00">2021-10-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-08 11:23:19" itemprop="dateModified" datetime="2021-12-08T11:23:19+08:00">2021-12-08</time>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-04 16:01:21" itemprop="dateModified" datetime="2022-09-04T16:01:21+08:00">2022-09-04</time>
               </span>
 
           
@@ -205,7 +220,7 @@
 <span id="more"></span>
 
 <h2 id="Python-的星号表达式"><a href="#Python-的星号表达式" class="headerlink" title="Python 的星号表达式"></a>Python 的星号表达式</h2><p>*_</p>
-<h2 id="堆数据结构heap"><a href="#堆数据结构heap" class="headerlink" title="堆数据结构heap"></a>堆数据结构heap</h2><p>堆数据结构最重要的特征是 heap[0] 永远是最小的元素。<br>用于从一个集合中获得最大或者最小的 N 个元素列表</p>
+<h2 id="堆数据结构-heap"><a href="#堆数据结构-heap" class="headerlink" title="堆数据结构 heap"></a>堆数据结构 heap</h2><p>堆数据结构最重要的特征是 heap[0] 永远是最小的元素。<br>用于从一个集合中获得最大或者最小的 N 个元素列表</p>
 <h2 id="怎样在一个序列上面保持元素顺序的同时消除重复的值？"><a href="#怎样在一个序列上面保持元素顺序的同时消除重复的值？" class="headerlink" title="怎样在一个序列上面保持元素顺序的同时消除重复的值？"></a>怎样在一个序列上面保持元素顺序的同时消除重复的值？</h2><p>如果序列上的值都是 hashable 类型，那么可以很简单的利用集合或者生成器来解决这个问题。<br><img src="https://gitee.com/zhouliang18/pic/raw/master/20211006225021.png" alt="hashable"><br>如果你想消除元素不可哈希（比如 dict 类型）的序列中重复元素的话，你需要将上述代码稍微改变一下<br><img src="https://gitee.com/zhouliang18/pic/raw/master/20211006225055.png" alt="not hashable"></p>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.6.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.6.0/dist/mindmap.min.css">
     </div>
@@ -221,11 +236,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/05/14/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
-    </a></div>
       <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/" rel="next" title="机器学习数据获取">
+      机器学习数据获取 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -275,16 +290,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%8F%98%E9%87%8F%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">提取变量值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E7%9A%84%E6%98%9F%E5%8F%B7%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">Python 的星号表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84heap"><span class="nav-number">3.</span> <span class="nav-text">堆数据结构heap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E6%A0%B7%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%8A%E9%9D%A2%E4%BF%9D%E6%8C%81%E5%85%83%E7%B4%A0%E9%A1%BA%E5%BA%8F%E7%9A%84%E5%90%8C%E6%97%B6%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E7%9A%84%E5%80%BC%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">怎样在一个序列上面保持元素顺序的同时消除重复的值？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%8F%98%E9%87%8F%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">提取变量值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E7%9A%84%E6%98%9F%E5%8F%B7%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">Python 的星号表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-heap"><span class="nav-number">3.</span> <span class="nav-text">堆数据结构 heap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E6%A0%B7%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%8A%E9%9D%A2%E4%BF%9D%E6%8C%81%E5%85%83%E7%B4%A0%E9%A1%BA%E5%BA%8F%E7%9A%84%E5%90%8C%E6%97%B6%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E7%9A%84%E5%80%BC%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">怎样在一个序列上面保持元素顺序的同时消除重复的值？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -298,8 +313,8 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
   </nav>
@@ -326,13 +341,13 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">zhouliang</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
         

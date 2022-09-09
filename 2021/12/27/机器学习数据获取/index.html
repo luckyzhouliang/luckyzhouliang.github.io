@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"luckyzhouliang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[#转自机器学习初学者] [TOC]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习数据获取">
+<meta property="og:url" content="https://luckyzhouliang.github.io/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/index.html">
+<meta property="og:site_name" content="南风知我意">
+<meta property="og:description" content="[#转自机器学习初学者] [TOC]">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyzhouliang.github.io/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/:/4f970d4fd1d1440895b943326cc6c5bc">
+<meta property="og:image" content="https://luckyzhouliang.github.io/:/92b043f02385442187ffedb9873ba683">
+<meta property="article:published_time" content="2021-12-27T14:09:16.000Z">
+<meta property="article:modified_time" content="2022-01-01T11:23:23.490Z">
+<meta property="article:author" content="zhouliang">
+<meta property="article:tag" content="Python, 数据分析, Linux, Matlab, Flight dynamics, Aircraft">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyzhouliang.github.io/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/:/4f970d4fd1d1440895b943326cc6c5bc">
+
+<link rel="canonical" href="https://luckyzhouliang.github.io/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>机器学习数据获取 | 南风知我意</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="南风知我意" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南风知我意</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术，热爱生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://luckyzhouliang.github.io/2021/12/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南风知我意">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习数据获取
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-27 22:09:16" itemprop="dateCreated datePublished" datetime="2021-12-27T22:09:16+08:00">2021-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-01 19:23:23" itemprop="dateModified" datetime="2022-01-01T19:23:23+08:00">2022-01-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[#转自机器学习初学者]</p>
+<p>[TOC]</p>
+<span id="more"></span>
+
+<h2 id="一、自带数据集"><a href="#一、自带数据集" class="headerlink" title="一、自带数据集"></a><strong>一、自带数据集</strong></h2><p>自带的小的数据集为：sklearn.datasets.load_&lt;name&gt;</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>load_boston</td>
+<td>Boston 房屋价格</td>
+<td>回归</td>
+<td>506*13</td>
+</tr>
+<tr>
+<td>fetch_california_housing</td>
+<td>加州住房</td>
+<td>回归</td>
+<td>20640*9</td>
+</tr>
+<tr>
+<td>load_diabetes</td>
+<td>糖尿病</td>
+<td>回归</td>
+<td>442*10</td>
+</tr>
+<tr>
+<td>load_digits</td>
+<td>手写字</td>
+<td>分类</td>
+<td>1797*64</td>
+</tr>
+<tr>
+<td>load_breast_cancer</td>
+<td>乳腺癌</td>
+<td>分类、聚类</td>
+<td>(357+212)*30</td>
+</tr>
+<tr>
+<td>load_iris</td>
+<td>鸢尾花</td>
+<td>分类、聚类</td>
+<td>(50*3)*4</td>
+</tr>
+<tr>
+<td>load_wine</td>
+<td>葡萄酒</td>
+<td>分类</td>
+<td>(59+71+48)*13</td>
+</tr>
+<tr>
+<td>load_linnerud</td>
+<td>体能训练</td>
+<td>多分类</td>
+<td>20</td>
+</tr>
+</tbody></table>
+<p><strong>怎么用：</strong></p>
+<p>数据集的信息关键字：</p>
+<ul>
+<li>DESCR：<br>数据集的描述信息</li>
+<li>data：<br>内部数据（即：X）</li>
+<li>feature_names：<br>数据字段名</li>
+<li>target：<br>数据标签（即：y）</li>
+<li>target_names：<br>标签字段名(回归数据集无此项）</li>
+</ul>
+<h2 id="使用方法（以-load-iris-为例）"><a href="#使用方法（以-load-iris-为例）" class="headerlink" title="使用方法（以 load_iris 为例）"></a><strong>使用方法（以 load_iris 为例）</strong></h2><p>数据介绍：</p>
+<ul>
+<li>一般用于做分类测试</li>
+<li>有 150 个数据集，共分为 3 类，每类 50 个样本。每个样本有 4 个特征。</li>
+<li>每条记录都有 4 项特征：包含 4 个特征（Sepal.Length（花萼长度）、Sepal.Width（花萼宽度）、Petal.Length（花瓣长度）、Petal.Width（花瓣宽度）），特征值都为正浮点数，单位为厘米。</li>
+<li>可以通过这 4 个特征预测鸢尾花卉属于（iris-setosa（山鸢尾）, iris-versicolour（杂色鸢尾）, iris-virginica（维吉尼亚鸢尾））中的哪一品种。</li>
+</ul>
+<p><strong>第一步：</strong></p>
+<p>导入数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line">iris = load_iris()</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二步：</strong></p>
+<p>定义 X 和 y</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X, y = iris.data, iris.target</span><br></pre></td></tr></table></figure>
+
+<p>此外，可以看下数据的维度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X.shape,y.shape</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<p>((150, 4), (150,))</p>
+<p>查看特征名：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iris.feature_names</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<p>[‘sepal length (cm)’,<br>‘sepal width (cm)’,<br>‘petal length (cm)’,<br>‘petal width (cm)’]</p>
+<p>查看标签名：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iris.target_names</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<p>array([‘setosa’, ‘versicolor’, ‘virginica’], dtype=’&lt;U10’)</p>
+<p>划分训练集和测试集:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.25</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样就把训练集和测试集按照 3 比 1 划分了，接下来就可以用机器学习算法进行训练和测试了。</p>
+<p>小技巧：将数据转换为 Dataframe 格式（两种方法都可以）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df_X = pd.DataFrame(iris.data, columns=iris.feature_names)</span><br><span class="line"><span class="comment">#这个是X</span></span><br><span class="line">df_y = pd.DataFrame(iris.target, columns=[<span class="string">&quot;target&quot;</span>])</span><br><span class="line"><span class="comment">#这个是y</span></span><br><span class="line">df=pd.concat([df_X,df2],axis=<span class="number">1</span>)<span class="comment">#横向合并</span></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">col_names = iris[<span class="string">&#x27;feature_names&#x27;</span>] + [<span class="string">&#x27;target&#x27;</span>]</span><br><span class="line">df = pd.DataFrame(data= np.c_[iris[<span class="string">&#x27;data&#x27;</span>], iris[<span class="string">&#x27;target&#x27;</span>]], columns=col_names)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<p>输出结果一致：</p>
+<img width="672" height="202" src=":/4f970d4fd1d1440895b943326cc6c5bc"/>
+
+<h2 id="二、可在线下载的数据集（需要下载）"><a href="#二、可在线下载的数据集（需要下载）" class="headerlink" title="二、可在线下载的数据集（需要下载）"></a><strong>二、可在线下载的数据集（需要下载）</strong></h2><p>下载的数据集为：sklearn.datasets.fetch_&lt;name&gt;</p>
+<p><strong>这类数据需要在线下载，有点慢</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fetch_20newsgroups</td>
+<td>用于文本分类、文本挖据和信息检索研究的国际标准数据集之一。数据集收集了大约 20,000 左右的新闻组文档，均匀分为 20 个不同主题的新闻组集合。返回一个可以被文本特征提取器</td>
+</tr>
+<tr>
+<td>fetch_20newsgroups_vectorized</td>
+<td>这是上面这个文本数据的向量化后的数据，返回一个已提取特征的文本序列，即不需要使用特征提取器</td>
+</tr>
+<tr>
+<td>fetch_california_housing</td>
+<td>加利福尼亚的房价数据，总计 20640 个样本，每个样本 8 个属性表示，以及房价作为 target，所有属性值均为 number，详情可调用 fetch_california_housing()[‘DESCR’]了解每个属性的具体含义；</td>
+</tr>
+<tr>
+<td>fetch_covtype</td>
+<td>森林植被类型，总计 581012 个样本，每个样本由 54 个维度表示（12 个属性，其中 2 个分别是 onehot4 维和 onehot40 维），以及 target 表示植被类型 1-7，所有属性值均为 number，详情可调用 fetch_covtype()[‘DESCR’]了解每个属性的具体含义</td>
+</tr>
+<tr>
+<td>fetch_kddcup99</td>
+<td>KDD 竞赛在 1999 年举行时采用的数据集，KDD99 数据集仍然是网络入侵检测领域的事实 Benckmark，为基于计算智能的网络入侵检测研究奠定基础，包含 41 项特征</td>
+</tr>
+<tr>
+<td>fetch_lfw_pairs</td>
+<td>该任务称为人脸验证：给定一对两张图片，二分类器必须预测这两个图片是否来自同一个人。</td>
+</tr>
+<tr>
+<td>fetch_lfw_people</td>
+<td>打好标签的人脸数据集</td>
+</tr>
+<tr>
+<td>fetch_mldata</td>
+<td>从 mldata.org 中下载数据集</td>
+</tr>
+<tr>
+<td>fetch_olivetti_faces</td>
+<td>Olivetti 脸部图片数据集</td>
+</tr>
+<tr>
+<td>fetch_rcv1</td>
+<td>路透社新闻语聊数据集</td>
+</tr>
+<tr>
+<td>fetch_species_distributions</td>
+<td>物种分布数据集</td>
+</tr>
+</tbody></table>
+<p>使用方法与自带数据集一致，只是多了下载过程（示例：fetch_20newsgroups）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import fetch_20newsgroups</span><br><span class="line">news = fetch_20newsgroups(subset=&#x27;all&#x27;) #本次使用的数据需要到互联网上下载</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">#对数据训练集和测试件进行划分</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">    news.data, news.target, test_size=0.25, random_state=33)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、生成数据集"><a href="#三、生成数据集" class="headerlink" title="三、生成数据集"></a><strong>三、生成数据集</strong></h2><p>可以用来分类任务，可以用来回归任务，可以用来聚类任务，用于流形学习的，用于因子分解任务的，用于分类任务和聚类任务的：这些函数产生样本特征向量矩阵以及对应的类别标签集合</p>
+<ul>
+<li>make_blobs：多类单标签数据集，为每个类分配一个或多个正态分布的点集</li>
+<li>make_classification：多类单标签数据集，为每个类分配一个或多个正态分布的点集，提供了为数据添加噪声的方式，包括维度相关性，无效特征以及冗余特征等</li>
+<li>make_gaussian-quantiles：将一个单高斯分布的点集划分为两个数量均等的点集，作为两类</li>
+<li>make_hastie-10-2：产生一个相似的二元分类数据集，有 10 个维度</li>
+<li>make_circle 和 make_moons：产生二维二元分类数据集来测试某些算法的性能，可以为数据集添加噪声，可以为二元分类器产生一些球形判决界面的数据</li>
+</ul>
+<p><strong>举例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_moons</span><br><span class="line">X, y = make_moons(n_samples=<span class="number">100</span>, noise=<span class="number">0.15</span>, random_state=<span class="number">42</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;make_moons function example&#x27;</span>)</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],marker=<span class="string">&#x27;o&#x27;</span>,c=y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/:/92b043f02385442187ffedb9873ba683" alt="Image"></p>
+<h2 id="四、其它数据集"><a href="#四、其它数据集" class="headerlink" title="四、其它数据集"></a><strong>四、其它数据集</strong></h2><p><strong>kaggle：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/">https://www.kaggle.com</a></p>
+<p><strong>天池：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/dataset">https://tianchi.aliyun.com/dataset</a></p>
+<p><strong>搜狗实验室：</strong></p>
+<p><a target="_blank" rel="noopener" href="http://www.sogou.com/labs/resource/list_pingce.php">http://www.sogou.com/labs/resource/list_pingce.php</a></p>
+<p><strong>DC 竞赛：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.pkbigdata.com/common/cmptIndex.html">https://www.pkbigdata.com/common/cmptIndex.html</a></p>
+<p><strong>DF 竞赛：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.datafountain.cn/datasets">https://www.datafountain.cn/datasets</a></p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.6.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.6.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/06/python%E7%AC%94%E8%AE%B0/" rel="prev" title="python笔记">
+      <i class="fa fa-chevron-left"></i> python笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/21/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%87%AA%E5%B8%A6%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">一、自带数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%BB%A5-load-iris-%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">使用方法（以 load_iris 为例）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8F%AF%E5%9C%A8%E7%BA%BF%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%88%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BD%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">二、可在线下载的数据集（需要下载）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">三、生成数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E5%AE%83%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">四、其它数据集</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zhouliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhouliang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
